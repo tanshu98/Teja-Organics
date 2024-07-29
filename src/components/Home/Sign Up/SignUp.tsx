@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import singUp from "./../../../assets/Images/SigninBg.png";
 import logo from "../../../assets/Images/Home.png";
 import {signInWithGooglePopup} from '../../../firebase';
@@ -31,10 +31,24 @@ const roles = [
 
 const SignUp = () => {
 
+  const [signUpData, setSignUpData] = useState({fullName:"",email:"", password: "",role: "I'm a Customer" });
+
     const logGoogleUser =async ()=> {
         let response = await signInWithGooglePopup();
         console.log(response);
         
+    }
+
+    const handleChange = (event:React.ChangeEvent<HTMLInputElement>)=> {
+      const {name, value} = event.target;
+      setSignUpData((prevData)=> ({...prevData, [name]: value}));
+    }
+
+    const handleSubmit = (event:React.FormEvent<HTMLFormElement>)=> {
+      event.preventDefault();
+      console.log("signUpData-----", signUpData);
+      
+      setSignUpData(signUpData);
     }
 
   return (
@@ -73,6 +87,7 @@ const SignUp = () => {
               Welcome Back, Please login to your account
             </Typography>
             <form
+            onSubmit={handleSubmit}
               style={{
                 marginTop: "12px",
                 // display: "flex",
@@ -97,7 +112,9 @@ const SignUp = () => {
                 sx={{ width: "100%" }}
                 variant="outlined"
                 type="text"
-                name="name"
+                name="fullName"
+                value={signUpData.fullName}
+                onChange={handleChange}
               />
               <Typography
                 sx={{
@@ -113,6 +130,8 @@ const SignUp = () => {
                 variant="outlined"
                 type="email"
                 name="email"
+                value={signUpData.email}
+                onChange={handleChange}
               />
               <Typography sx={{ fontFamily: "Poppins", fontWeight: 600 }}>
                 Password
@@ -122,6 +141,8 @@ const SignUp = () => {
                 variant="outlined"
                 type="password"
                 name="password"
+                value={signUpData.password}
+                onChange={handleChange}
               />
               <Typography sx={{ fontFamily: "Poppins", fontWeight: 600 }}>
                 Role
@@ -129,7 +150,8 @@ const SignUp = () => {
               <TextField
                 variant="outlined"
                 select
-                defaultValue="I'm a Customer"
+                // defaultValue={signUpData.role}
+                value={signUpData.role}
                 sx={{ width: "100%" }}
               >
                 {roles.map((role) => (
@@ -138,7 +160,7 @@ const SignUp = () => {
                   </MenuItem>
                 ))}
               </TextField>
-              <Box
+              {/* <Box
                 sx={{
                   display: "flex",
                   flexDirection: { xs: "column", sm: "row" },
@@ -179,7 +201,7 @@ const SignUp = () => {
                 >
                   Forgot password?
                 </Typography>
-              </Box>
+              </Box> */}
               <Stack
                 sx={{
                   // flexDirection:"row",
@@ -192,6 +214,7 @@ const SignUp = () => {
                 }}
               >
                 <Button
+                type="submit"
                   sx={{
                     backgroundColor: "#00B207",
                     fontSize: "16px",
@@ -199,27 +222,9 @@ const SignUp = () => {
                     fontFamily: "Poppins",
                     borderRadius: "8px",
                     "&:hover": { backgroundColor: "#00A307" },
-                    width: "200px",
+                    width: "100%",
                   }}
                   variant="contained"
-                >
-                  Login
-                </Button>
-                <Button
-                  sx={{
-                    color: "#00B207",
-                    fontSize: "16px",
-                    fontWeight: 600,
-                    fontFamily: "Poppins",
-                    borderRadius: "8px",
-                    border: "1px solid #00B207 ",
-                    width: "200px",
-                    "&:hover": {
-                      border: "1px solid #00B207 ",
-                      color: "#00B207",
-                    },
-                  }}
-                  variant="outlined"
                 >
                   Sign Up
                 </Button>
