@@ -3,7 +3,6 @@ import {
   Button,
   Checkbox,
   Grid,
-  InputLabel,
   MenuItem,
   Stack,
   TextField,
@@ -12,31 +11,29 @@ import {
 import React from "react";
 import singUp from "./../../../assets/Images/SigninBg.png";
 import logo from "../../../assets/Images/Home.png";
-import {signInWithGooglePopup} from '../../../firebase';
-import googleLogo from '../../../assets/Images/google (1) 1.png';
+import { signInWithGooglePopup } from "../../../firebase";
+import googleLogo from "../../../assets/Images/google (1) 1.png";
 
 const roles = [
-    {
-      value: 1,
-      label: "I'm a Customer",
-    },
-    {
-      value: 2,
-      label: "I'm an Admin",
-    },
-    {
-      value: 3,
-      label: "I'm a Delivery Boy",
-    },
-  ];
+  {
+    value: 1,
+    label: "I'm a Customer",
+  },
+  {
+    value: 2,
+    label: "I'm an Admin",
+  },
+  {
+    value: 3,
+    label: "I'm a Delivery Boy",
+  },
+];
 
 const Login = () => {
-
-    const logGoogleUser =async ()=> {
-        let response = await signInWithGooglePopup();
-        console.log(response);
-        
-    }
+  const logGoogleUser = async () => {
+    let response = await signInWithGooglePopup();
+    console.log(response);
+  };
 
   return (
     <Grid container sx={{ overflow: "hidden" }}>
@@ -76,8 +73,9 @@ const Login = () => {
             <form
               style={{
                 marginTop: "14px",
-                // display: "flex",
-                // flexDirection: "column",
+                gap:10,
+                display: "flex",
+                flexDirection: "column",
                 // textAlign: "start",
                 // alignContent: "start",
                 // flexWrap: "wrap",
@@ -95,7 +93,12 @@ const Login = () => {
                 Email
               </Typography>
               <TextField
-                sx={{ width: "100%" }}
+                sx={{
+                  width: "100%",
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "8px",
+                  },
+                }}
                 variant="outlined"
                 type="email"
                 name="email"
@@ -116,7 +119,7 @@ const Login = () => {
                 variant="outlined"
                 select
                 defaultValue="I'm a Customer"
-                sx={{ width: "100%" }}
+                sx={{ width: "100%", fontFamily: "Poppins" }}
               >
                 {roles.map((role) => (
                   <MenuItem key={role.value} value={role.label}>
@@ -172,9 +175,9 @@ const Login = () => {
                   flexDirection: { xs: "column", sm: "row" },
                   gap: 2,
                   justifyContent: "space-between",
-                  textAlign:'center',
-                  alignItems:'center',
-                  mt:1
+                  textAlign: "center",
+                  alignItems: "center",
+                  mt: 1,
                 }}
               >
                 <Button
@@ -210,7 +213,17 @@ const Login = () => {
                   Sign Up
                 </Button>
               </Stack>
-              <Box onClick={logGoogleUser} sx={{display:'flex', justifyContent:'center', cursor:'pointer',gap:1,alignItems:'center',mt:2}} >
+              <Box
+                onClick={logGoogleUser}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  gap: 1,
+                  alignItems: "center",
+                  mt: 2,
+                }}
+              >
                 <Typography>or</Typography>
                 {/* <Button variant="contained" onClick={logGoogleUser}>Continue with Google</Button> */}
                 <img src={googleLogo} alt="" />

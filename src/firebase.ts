@@ -2,19 +2,16 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA5bcyVs50IUOfJWItpeeW8SiwPu1dQGZc",
-  authDomain: "teja-organics-fc83c.firebaseapp.com",
-  projectId: "teja-organics-fc83c",
-  storageBucket: "teja-organics-fc83c.appspot.com",
-  messagingSenderId: "915535630618",
-  appId: "1:915535630618:web:26185081549f411be41ca3",
-  measurementId: "G-L91649WYSW"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
@@ -23,11 +20,7 @@ const analytics = getAnalytics(app);
 
 // Initialize Firebase Auth provider
 const provider = new GoogleAuthProvider();
-
-// whenever a user interacts with the provider, we force them to select an account
-provider.setCustomParameters({   
-    prompt : "select_account "
-});
+provider.setCustomParameters({ prompt: "select_account" });
 
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
