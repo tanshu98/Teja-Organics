@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import SignUpReducer from "../reducers/SignUpSlice";
 
 export const store = configureStore({
-    reducer: {}
+    reducer: {
+        signUp: SignUpReducer
+    }
 }) 
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
