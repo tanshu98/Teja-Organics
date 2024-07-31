@@ -7,15 +7,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import singUp from "./../../../assets/Images/SigninBg.png";
-import logo from "../../../assets/Images/Home.png";
-import { signInWithGooglePopup } from "../../../firebase";
-import googleLogo from "../../../assets/Images/google (1) 1.png";
-import {
-  updateSignUpData,
-} from "../../../redux/reducers/SignUpSlice";
+import singUp from "./../../assets/Images/SigninBg.png";
+import logo from "../../assets/Images/Home.png";
+import { signInWithGooglePopup } from "../../firebase";
+import googleLogo from "../../assets/Images/google (1) 1.png";
+import { updateSignUpData } from "../../redux/reducers/SignUpSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store/store";
+import { RootState } from "../../redux/store/store";
 
 const roles = [
   {
@@ -38,7 +36,6 @@ const SignUp = () => {
   // const [signUpData, setSignUpData] = useState({fullName:"",email:"", password: "",role: "I'm a Customer" });
   const signUpData = useSelector((state: RootState) => state.signUp.signUpData);
   console.log(signUpData);
-  
 
   const logGoogleUser = async () => {
     let response = await signInWithGooglePopup();
@@ -48,9 +45,11 @@ const SignUp = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     // setSignUpData((prevData)=> ({...prevData, [name]: value}));
-    dispatch(updateSignUpData({
-      [name]: value,
-    }));
+    dispatch(
+      updateSignUpData({
+        [name]: value,
+      })
+    );
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -170,7 +169,7 @@ const SignUp = () => {
                   </MenuItem>
                 ))}
               </TextField>
-            
+
               <Stack
                 sx={{
                   // flexDirection:"row",

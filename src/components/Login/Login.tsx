@@ -9,10 +9,10 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import singUp from "./../../../assets/Images/SigninBg.png";
-import logo from "../../../assets/Images/Home.png";
-import { signInWithGooglePopup } from "../../../firebase";
-import googleLogo from "../../../assets/Images/google (1) 1.png";
+import singUp from "./../../assets/Images/SigninBg.png";
+import logo from "../../assets/Images/Home.png";
+import { signInWithGooglePopup } from "../../firebase";
+import googleLogo from "../../assets/Images/google (1) 1.png";
 
 const roles = [
   {
