@@ -1,55 +1,64 @@
 import {
   Box,
   Button,
-  Checkbox,
   Grid,
   MenuItem,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
 import singUp from "./../../../assets/Images/SigninBg.png";
 import logo from "../../../assets/Images/Home.png";
-import {signInWithGooglePopup} from '../../../firebase';
-import googleLogo from '../../../assets/Images/google (1) 1.png';
+import { signInWithGooglePopup } from "../../../firebase";
+import googleLogo from "../../../assets/Images/google (1) 1.png";
+import {
+  updateSignUpData,
+} from "../../../redux/reducers/SignUpSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store/store";
 
 const roles = [
-    {
-      value: 1,
-      label: "I'm a Customer",
-    },
-    {
-      value: 2,
-      label: "I'm an Admin",
-    },
-    {
-      value: 3,
-      label: "I'm a Delivery Boy",
-    },
-  ];
+  {
+    value: 1,
+    label: "I'm a Customer",
+  },
+  {
+    value: 2,
+    label: "I'm an Admin",
+  },
+  {
+    value: 3,
+    label: "I'm a Delivery Boy",
+  },
+];
 
 const SignUp = () => {
+  const dispatch = useDispatch();
 
-  const [signUpData, setSignUpData] = useState({fullName:"",email:"", password: "",role: "I'm a Customer" });
+  // const [signUpData, setSignUpData] = useState({fullName:"",email:"", password: "",role: "I'm a Customer" });
+  const signUpData = useSelector((state: RootState) => state.signUp.signUpData);
+  console.log(signUpData);
+  
 
-    const logGoogleUser =async ()=> {
-        let response = await signInWithGooglePopup();
-        console.log(response);
-        
-    }
+  const logGoogleUser = async () => {
+    let response = await signInWithGooglePopup();
+    console.log(response);
+  };
 
-    const handleChange = (event:React.ChangeEvent<HTMLInputElement>)=> {
-      const {name, value} = event.target;
-      setSignUpData((prevData)=> ({...prevData, [name]: value}));
-    }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    // setSignUpData((prevData)=> ({...prevData, [name]: value}));
+    dispatch(updateSignUpData({
+      [name]: value,
+    }));
+  };
 
-    const handleSubmit = (event:React.FormEvent<HTMLFormElement>)=> {
-      event.preventDefault();
-      console.log("signUpData-----", signUpData);
-      
-      setSignUpData(signUpData);
-    }
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log("signUpData-----", signUpData);
+
+    // setSignUpData(signUpData);
+  };
 
   return (
     <Grid container sx={{ overflow: "hidden" }}>
@@ -87,7 +96,7 @@ const SignUp = () => {
               Welcome Back, Please login to your account
             </Typography>
             <form
-            onSubmit={handleSubmit}
+              onSubmit={handleSubmit}
               style={{
                 marginTop: "12px",
                 // display: "flex",
@@ -150,8 +159,9 @@ const SignUp = () => {
               <TextField
                 variant="outlined"
                 select
-                // defaultValue={signUpData.role}
+                name="role"
                 value={signUpData.role}
+                onChange={handleChange}
                 sx={{ width: "100%" }}
               >
                 {roles.map((role) => (
@@ -160,61 +170,20 @@ const SignUp = () => {
                   </MenuItem>
                 ))}
               </TextField>
-              {/* <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: { xs: "column", sm: "row" },
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    // flexDirection: { xs: "column", sm: "row" },
-
-                    alignItems: "center",
-                  }}
-                >
-                  <Checkbox
-                    sx={{
-                      "& .MuiSvgIcon-root": { fontSize: 14, color: "#00B207" },
-                    }}
-                  />
-                  <Typography
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontSize: "14px",
-                      fontWeight: 400,
-                      color: "#898989",
-                    }}
-                  >
-                    Remember me
-                  </Typography>
-                </Box>
-                <Typography
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontSize: "14px",
-                    fontWeight: 400,
-                  }}
-                >
-                  Forgot password?
-                </Typography>
-              </Box> */}
+            
               <Stack
                 sx={{
                   // flexDirection:"row",
                   flexDirection: { xs: "column", sm: "row" },
                   gap: 2,
                   justifyContent: "space-between",
-                  textAlign:'center',
-                  alignItems:'center',
-                  mt:1
+                  textAlign: "center",
+                  alignItems: "center",
+                  mt: 1,
                 }}
               >
                 <Button
-                type="submit"
+                  type="submit"
                   sx={{
                     backgroundColor: "#00B207",
                     fontSize: "16px",
@@ -229,9 +198,18 @@ const SignUp = () => {
                   Sign Up
                 </Button>
               </Stack>
-              <Box onClick={logGoogleUser} sx={{display:'flex', justifyContent:'center', cursor:'pointer',gap:1,alignItems:'center',mt:2}} >
+              <Box
+                onClick={logGoogleUser}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  gap: 1,
+                  alignItems: "center",
+                  mt: 2,
+                }}
+              >
                 <Typography>or</Typography>
-                {/* <Button variant="contained" onClick={logGoogleUser}>Continue with Google</Button> */}
                 <img src={googleLogo} alt="" />
                 <Typography>Singup with Google</Typography>
               </Box>
@@ -244,7 +222,6 @@ const SignUp = () => {
           sx={{
             display: { xs: "none", sm: "none", md: "block" },
             height: "100%",
-            // pb: 0.9,
           }}
         >
           <img
